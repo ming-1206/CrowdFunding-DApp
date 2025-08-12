@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThirdwebProvider } from "thirdweb/react";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,11 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="bg-slate-100 text-slate-700">
+    <html lang="en" className="dark">
+      <body
+        className={`${inter.className} bg-gradient-to-b from-black via-gray-900 to-black text-purple-200 min-h-screen`}
+      >
         <ThirdwebProvider>
           <Navbar />
-          {children}
+          <main className="px-4 sm:px-6 lg:px-8">{children}</main>
+          <Footer />
         </ThirdwebProvider>
       </body>
     </html>

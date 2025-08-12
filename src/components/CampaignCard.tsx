@@ -45,53 +45,57 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
     params: [],
   });
 
-  // Calulate the total funded balance percentage
+  // Calculate the total funded balance percentage
   const totalBalance = balance?.toString();
   const totalGoal = goal?.toString();
   let balancePercentage =
     (parseInt(totalBalance as string) / parseInt(totalGoal as string)) * 100;
 
-  // If balance is greater than or equal to goal, percentage should be 100
   if (balancePercentage >= 100) {
     balancePercentage = 100;
   }
 
   return (
-    <div className="flex flex-col justify-between max-w-sm p-6 bg-white border border-slate-200 rounded-lg shadow">
+    <div className="flex flex-col justify-between max-w-sm p-6 rounded-xl bg-black/60 backdrop-blur-lg border border-purple-500/40 shadow-[0_0_15px_rgba(167,38,169,0.3)] hover:shadow-[0_0_25px_rgba(167,38,169,0.6)] transition-all duration-300">
       <div>
+        {/* Progress Bar */}
         {!isLoadingBalance && (
           <div className="mb-4">
-            <div className="relative w-full h-6 bg-gray-200 rounded-full dark:bg-gray-700">
+            <div className="relative w-full h-6 bg-gray-800 rounded-full overflow-hidden">
+              {/* Filled gradient */}
               <div
-                className="h-6 bg-blue-600 rounded-full dark:bg-blue-500 text-right"
+                className="absolute top-0 left-0 h-6 bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-500"
                 style={{ width: `${balancePercentage?.toString()}%` }}
-              >
-                <p className="text-white dark:text-white text-xs p-1">
-                  ${balance?.toString()}
-                </p>
+              ></div>
+
+              {/* Text labels (above the fill) */}
+              <div className="relative z-10 flex justify-between items-center px-2 h-full text-xs font-medium">
+                <span className="text-white">${balance?.toString()}</span>
+                <span className="text-purple-200">
+                  {balancePercentage?.toFixed(0)}%
+                </span>
               </div>
-              <p className="absolute top-0 right-0 text-white dark:text-white text-xs p-1">
-                {balancePercentage >= 100
-                  ? ""
-                  : `${balancePercentage?.toString()}%`}
-              </p>
             </div>
           </div>
         )}
-        <h5 className="mb-2 text-2xl font-bold tracking-tight">
+
+        {/* Campaign Name */}
+        <h5 className="mb-2 text-2xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
           {campaignName}
         </h5>
 
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        {/* Campaign Description */}
+        <p className="mb-3 font-normal text-purple-200 opacity-80">
           {campaignDescription}
         </p>
       </div>
 
+      {/* View Campaign Button */}
       <Link href={`/campaign/${campaignAddress}`} passHref={true}>
-        <p className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <p className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-lg hover:bg-purple-700 hover:shadow-[0_0_15px_rgba(167,38,169,0.8)] focus:ring-2 focus:outline-none focus:ring-purple-400 transition-all duration-300">
           View Campaign
           <svg
-            className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+            className="w-3.5 h-3.5 ml-2"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
